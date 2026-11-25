@@ -1,11 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Cena, TermoGlossario } from '../models/scene.model';
 
+/**
+ * Serviço responsável por gerenciar o estado estático da narrativa,
+ * contendo o fluxo de decisões, o vocabulário e a lógica de recuperação
+ * de dados para a interface principal.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class NarrativaService {
 
+  /**
+   * Dicionário de termos etimológicos utilizados pelo Pipe de glossário
+   * para injetar os tooltips no texto da narrativa.
+   */
   private dicionario: TermoGlossario[] = [
     { palavra: 'burladores', definicao: 'Del latín tardío "burrula". Engañadores, estafadores. Personajes que viven del engaño en la literatura medieval.' },
     { palavra: 'omne', definicao: 'Hombre. Evolución del latín "homo", anterior a la forma moderna "hombre". Muy usado por Don Juan Manuel.' },
@@ -20,6 +29,11 @@ export class NarrativaService {
     { palavra: 'aver', definicao: 'Haber / Riqueza. En este contexto, significa "riquezas" o "bienes" (dinero).' }
   ];
 
+  /**
+   * Array que atua como banco de dados local, definindo a árvore de 
+   * decisões, as traduções diacrônicas e o peso de cada escolha
+   * no termômetro de credibilidade.
+   */
   private cenas: Cena[] = [
     {
       id: 'tela_inicial',
@@ -141,15 +155,29 @@ export class NarrativaService {
     }
   ];
 
+  /**
+   * Retorna o dicionário completo utilizado para injetar dados etimológicos.
+   */
   obterDicionario(): TermoGlossario[] {
     return this.dicionario;
   }
 
+  /**
+   * Recupera uma cena específica com base no ID.
+   * Caso o ID seja inválido ou inexistente, executa fallback para a tela inicial
+   * visando prevenir quebra de layout no front-end.
+   * 
+   * @param id String correspondente ao identificador único da cena no array.
+   */
   obterCena(id: string): Cena {
     const cena = this.cenas.find(c => c.id === id);
     return cena ? cena : this.cenas[0];
   }
 
+  /**
+   * Retorna explicitamente a primeira cena cadastrada,
+   * utilizada majoritariamente no ngOnInit e em lógicas de reset de estado.
+   */
   obterCenaInicial(): Cena {
     return this.cenas[0];
   }

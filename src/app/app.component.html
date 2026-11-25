@@ -1,6 +1,17 @@
+<!--
+  Container Principal e Theming Dinâmico.
+  Aplica a classe de perigo (tensão visual) globalmente caso o nível
+  de engano da corte atinja ou ultrapasse 80%.
+-->
 <main class="teatro-container" [class.perigo-maximo]="nivelEngano >= 80">
   <div class="pergaminho-card">
     
+    <!--
+      Cabeçalho e Navegação.
+      Gerencia o histórico de ações (botão Voltar) e o estado do pipe 
+      de tradução diacrônica (Switch Actual/Medieval), o qual é omitido 
+      no painel pedagógico final.
+    -->
     <header class="linguistica-header">
       <button class="btn-voltar" *ngIf="historico.length > 0" (click)="voltar()">&#8592; Volver</button>
       
@@ -14,10 +25,13 @@
       </div>
     </header>
 
-    <!-- Trigger da animação: reage sempre que o ID muda -->
+    <!--
+      Área de Conteúdo Narrativo.
+      Atrelada ao trigger de animação @fadeBlur, que é reexecutado
+      sempre que o ID da cena é alterado no TypeScript.
+    -->
     <div [@fadeBlur]="cenaAtual.id">
       
-      <!-- Cenas Normais -->
       <ng-container *ngIf="!cenaAtual.isFinal">
         <p class="texto-historia" 
            [class.texto-destaque]="cenaAtual.id === 'tela_inicial'"
@@ -34,7 +48,11 @@
         </div>
       </ng-container>
 
-      <!-- FEATURE 5: Painel Pedagógico de Duas Colunas (Finais) -->
+      <!--
+        Painel Pedagógico Metodológico (Modo Professor).
+        Substitui a narrativa quando isFinal é true, dividindo a tela
+        entre a conclusão da obra e o plano de aula/habilidades.
+      -->
       <div class="painel-final" *ngIf="cenaAtual.isFinal">
         
         <div class="coluna-narrativa">
@@ -59,7 +77,11 @@
       </div>
     </div>
     
-    <!-- Termômetro de Engano -->
+    <!--
+      Interface de Gamificação (Termômetro).
+      Reflete o estado numérico do engano. Oculto na tela inicial (neutra)
+      e na tela final (reflexão).
+    -->
     <div class="termometro-wrapper" *ngIf="cenaAtual.id !== 'tela_inicial' && !cenaAtual.isFinal">
       <span class="termometro-label">Nivel de Engaño en la Corte</span>
       <div class="termometro-track">

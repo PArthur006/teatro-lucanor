@@ -2,6 +2,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NarrativaService } from '../services/narrativa.service';
 
+/**
+ * Pipe responsável por interceptar o texto da narrativa e injetar marcações
+ * HTML para habilitar os tooltips do glossário etimológico.
+ */
 @Pipe({
   name: 'glossario',
   standalone: true
@@ -13,6 +17,13 @@ export class GlossarioPipe implements PipeTransform {
     private sanitizer: DomSanitizer
   ) {}
 
+  /**
+   * Varre a string de entrada em busca de termos do dicionário, envelopando-os 
+   * em tags <span> estilizadas com o atributo de tooltip.
+   * 
+   * @param texto A string da narrativa atual (Atual ou Medieval).
+   * @returns O HTML processado e liberado das restrições de sanitização XSS do Angular.
+   */
   transform(texto: string): SafeHtml {
     if (!texto) return '';
     
@@ -20,11 +31,8 @@ export class GlossarioPipe implements PipeTransform {
     const dicionario = this.narrativaService.obterDicionario();
 
     dicionario.forEach(termo => {
-      // Cria a Regex para buscar a palavra exata
       const regex = new RegExp(`\\b(${termo.palavra})\\b`, 'gi');
       
-      // Converte aspas duplas (") para a entidade HTML segura (&quot;)
-      // Isso impede que o texto quebre o atributo data-tooltip
       const definicaoSegura = termo.definicao.replace(/"/g, '&quot;');
       
       textoProcessado = textoProcessado.replace(

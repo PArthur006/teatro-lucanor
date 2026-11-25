@@ -1,6 +1,9 @@
 @use 'sass:color';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
 
+/* ==========================================================================
+   VARIÁVEIS E TIPOGRAFIA GLOBAL
+   ========================================================================== */
 $azul-ultramarino: #1D3557;
 $pergaminho: #F4ECD8;
 $ouro-envelhecido: #C9A227;
@@ -12,84 +15,41 @@ $texto-escuro: #1a1a1a;
   font-family: 'Montserrat', sans-serif;
 }
 
+/* ==========================================================================
+   LAYOUT PRINCIPAL (GLASSMORPHISM E CONTAINERS)
+   ========================================================================== */
 .teatro-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background-color: $azul-ultramarino;
-  background-image: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 0%, transparent 60%),
+    repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 4px);
   padding: 2rem;
   transition: all 0.5s ease;
 }
 
 .pergaminho-card {
   position: relative;
-  background-color: $pergaminho;
+  background-color: rgba(244, 236, 216, 0.92);
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px);
   max-width: 900px;
   width: 100%;
   padding: 4rem;
   border-radius: 4px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), inset 0 0 30px rgba($ouro-envelhecido, 0.15);
   border: 4px double $ouro-envelhecido;
   text-align: center;
-  animation: float 6s ease-in-out infinite;
 }
 
-.card-header {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-}
-
-.btn-voltar {
-  background: transparent;
-  border: none;
-  color: $azul-ultramarino;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: 0.7;
-  transition: opacity 0.2s, transform 0.2s;
-
-  &:hover {
-    opacity: 1;
-    transform: translateX(-5px);
-  }
-}
-
-.titulo-medieval {
-  font-size: 3rem;
-  color: $vermelho-carmesim;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid $ouro-envelhecido;
-  padding-bottom: 1rem;
-}
-
-.conteudo-animado {
-  animation: textFade 0.5s ease-out forwards;
-}
-
-.texto-historia {
-  font-size: 1.6rem;
-  line-height: 1.7;
-  color: $texto-escuro;
-  margin-bottom: 3.5rem;
-  font-weight: 500;
-  
-  &.texto-destaque {
-    font-size: 1.8rem;
-    font-style: italic;
-  }
-}
-
-// --- Feature 1: Toggle Switch ---
+/* ==========================================================================
+   CABEÇALHO E CONTROLES LINGUÍSTICOS
+   ========================================================================== */
 .linguistica-header {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,6 +57,35 @@ $texto-escuro: #1a1a1a;
   margin-bottom: 2.5rem;
   padding-bottom: 1rem;
   border-bottom: 1px dashed rgba($ouro-envelhecido, 0.5);
+  min-height: 30px;
+  
+  .btn-voltar {
+    position: absolute;
+    left: 0;
+    background: transparent;
+    border: none;
+    color: $azul-ultramarino;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.2s;
+
+    &:hover {
+      opacity: 1;
+      transform: translateX(-5px);
+    }
+  }
+
+  .switch-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 auto;
+  }
 
   .label-lang {
     font-size: 0.9rem;
@@ -105,13 +94,12 @@ $texto-escuro: #1a1a1a;
     transition: color 0.3s ease;
 
     &.ativo {
-      color: $vermelho-carmesim; // Destaca a linguagem ativa
+      color: $vermelho-carmesim;
       font-weight: 700;
     }
   }
 }
 
-// Estilo do Switch (Padrão CSS moderno)
 .switch {
   position: relative;
   display: inline-block;
@@ -155,7 +143,22 @@ $texto-escuro: #1a1a1a;
   }
 }
 
-// --- Feature 2: Tooltips do Glossário (Micro-learning) ---
+/* ==========================================================================
+   TIPOGRAFIA DA NARRATIVA E TOOLTIPS (GLOSSÁRIO)
+   ========================================================================== */
+.texto-historia {
+  font-size: 1.6rem;
+  line-height: 1.7;
+  color: $texto-escuro;
+  margin-bottom: 3.5rem;
+  font-weight: 500;
+  
+  &.texto-destaque {
+    font-size: 1.8rem;
+    font-style: italic;
+  }
+}
+
 ::ng-deep .termo-glossario {
   position: relative;
   color: $vermelho-carmesim;
@@ -166,62 +169,57 @@ $texto-escuro: #1a1a1a;
 
   &:hover {
     background-color: rgba($ouro-envelhecido, 0.2);
-  }
+    
+    &::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 130%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: $azul-ultramarino;
+      color: $pergaminho;
+      padding: 0.8rem 1.2rem;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      width: max-content;
+      max-width: 250px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      border: 1px solid $ouro-envelhecido;
+      z-index: 10;
+      pointer-events: none;
+      animation: fadeInTooltip 0.2s ease-in forwards;
+    }
 
-  // O balão do Tooltip
-  &:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 130%; // Flutua acima da palavra
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: $azul-ultramarino;
-    color: $pergaminho;
-    padding: 0.8rem 1.2rem;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    line-height: 1.4;
-    white-space: pre-wrap;
-    width: max-content;
-    max-width: 250px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    border: 1px solid $ouro-envelhecido;
-    z-index: 10;
-    pointer-events: none;
-    animation: fadeInTooltip 0.2s ease-in forwards;
-  }
-
-  // A seta do balão
-  &:hover::before {
-    content: "";
-    position: absolute;
-    bottom: 110%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 6px;
-    border-style: solid;
-    border-color: $azul-ultramarino transparent transparent transparent;
-    z-index: 11;
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 6px;
+      border-style: solid;
+      border-color: $azul-ultramarino transparent transparent transparent;
+      z-index: 11;
+    }
   }
 }
 
-@keyframes fadeInTooltip {
-  from { opacity: 0; transform: translate(-50%, 10px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
-}
-
-// Botões lado a lado e idênticos
+/* ==========================================================================
+   INTERAÇÃO (BOTÕES DE DECISÃO)
+   ========================================================================== */
 .opcoes-container {
   display: flex;
   justify-content: center;
   align-items: stretch;
   gap: 2rem;
-  flex-wrap: wrap; // Permite quebrar linha em telas menores
+  flex-wrap: wrap;
 }
 
 .btn-decisao {
-  flex: 1; // Força os botões a terem a mesma largura
+  flex: 1;
   min-width: 250px;
   font-family: 'Montserrat', sans-serif;
   font-size: 1.1rem;
@@ -229,7 +227,7 @@ $texto-escuro: #1a1a1a;
   padding: 1.2rem 2rem;
   background-color: $ouro-envelhecido;
   color: $texto-escuro;
-  border: 2px solid color.scale($ouro-envelhecido, $lightness: 15%);
+  border: 2px solid color.scale($ouro-envelhecido, $lightness: -15%);
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -247,64 +245,9 @@ $texto-escuro: #1a1a1a;
   }
 }
 
-/* Modificadores do final */
-.reflexao-final {
-  margin-top: 1rem;
-  
-  hr {
-    border: none;
-    height: 2px;
-    background-color: $ouro-envelhecido;
-    margin-bottom: 2.5rem;
-  }
-
-  h3 {
-    color: $vermelho-carmesim;
-    font-size: 2rem;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-  }
-
-  .pergunta-pedagogica {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: $verde-esmeralda;
-    margin-bottom: 3rem;
-  }
-}
-
-.glitch-mode {
-  background-color: #050505;
-  background-image: none;
-  animation: bg-glitch 0.2s infinite;
-  
-  .pergaminho-card {
-    border-color: $verde-esmeralda;
-    box-shadow: 5px 5px 0px $vermelho-carmesim, -5px -5px 0px $azul-ultramarino;
-    animation: none; // Para o float no final para manter a gravidade do glitch
-  }
-}
-
-/* Animações */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
-}
-
-@keyframes textFade {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes bg-glitch {
-  0% { background-color: #050505; }
-  50% { background-color: #0a0a0a; }
-  100% { background-color: #050505; }
-}
-
-
-// --- Feature 3: Termômetro de Engano ---
+/* ==========================================================================
+   MÓDULOS DE GAMIFICAÇÃO E PEDAGOGIA
+   ========================================================================== */
 .termometro-wrapper {
   margin-top: 3rem;
   padding-top: 1.5rem;
@@ -334,68 +277,12 @@ $texto-escuro: #1a1a1a;
 
 .termometro-fill {
   height: 100%;
-  // A cor muda gradativamente de verde esmeralda para vermelho carmesim usando CSS nativo
   background: linear-gradient(90deg, $verde-esmeralda 0%, $ouro-envelhecido 50%, $vermelho-carmesim 100%);
   background-size: 200% 100%;
   border-radius: 8px;
   transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-// Quando a barra passa de 80%, a tela inteira entra em modo de tensão
-.perigo-maximo {
-  animation: pulse-danger 2s infinite alternate;
-  
-  .termometro-fill {
-    background: $vermelho-carmesim;
-    box-shadow: 0 0 10px $vermelho-carmesim;
-  }
-}
-
-@keyframes pulse-danger {
-  0% { background-color: $azul-ultramarino; }
-  100% { background-color: color.mix($azul-ultramarino, $vermelho-carmesim, 85%); }
-}
-
-// Ajuste rápido do header para o botão voltar ficar ao lado do switch
-.linguistica-header {
-  position: relative;
-  min-height: 30px;
-  
-  .btn-voltar {
-    position: absolute;
-    left: 0;
-  }
-  
-  .switch-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 0 auto;
-  }
-}
-
-
-// Atualização do fundo para dar mais profundidade ao Glassmorphism
-.teatro-container {
-  // Mantém as regras anteriores de flex e background-color
-  background-image: 
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 0%, transparent 60%),
-    repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 4px);
-}
-
-// FEATURE 4: Efeito de Vidro (Backdrop Filter) no Pergaminho
-.pergaminho-card {
-  // Altere o background-color do pergaminho para a versão com transparência (RGBA)
-  background-color: rgba(244, 236, 216, 0.92);
-  backdrop-filter: blur(10px); 
-  -webkit-backdrop-filter: blur(10px);
-  
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), inset 0 0 30px rgba($ouro-envelhecido, 0.15);
-  // Remova a animação 'float' antiga daqui, pois o Glassmorphism com animações pesadas 
-  // conflita no pipeline de renderização de alguns navegadores.
-}
-
-// FEATURE 5: Grid de Duas Colunas para o Modo Professor
 .painel-final {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -404,11 +291,6 @@ $texto-escuro: #1a1a1a;
   margin-top: 1.5rem;
   border-top: 2px solid rgba($ouro-envelhecido, 0.4);
   padding-top: 2rem;
-
-  // Em telas menores, quebra para uma coluna empilhada
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
 
   h3 {
     color: $vermelho-carmesim;
@@ -420,7 +302,7 @@ $texto-escuro: #1a1a1a;
   }
 
   .texto-historia {
-    font-size: 1.2rem; // Ajusta o tamanho da fonte para a coluna
+    font-size: 1.2rem;
     margin-bottom: 0;
   }
 }
@@ -454,3 +336,103 @@ $texto-escuro: #1a1a1a;
 
 .w-100 { width: 100%; }
 .mt-2 { margin-top: 2rem; }
+
+/* ==========================================================================
+   ANIMAÇÕES E ESTADOS DE TENSÃO
+   ========================================================================== */
+.perigo-maximo {
+  animation: pulse-danger 2s infinite alternate;
+  
+  .termometro-fill {
+    background: $vermelho-carmesim;
+    box-shadow: 0 0 10px $vermelho-carmesim;
+  }
+}
+
+@keyframes pulse-danger {
+  0% { background-color: $azul-ultramarino; }
+  100% { background-color: color.mix($azul-ultramarino, $vermelho-carmesim, 85%); }
+}
+
+@keyframes fadeInTooltip {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (MOBILE & TABLET)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .teatro-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .pergaminho-card {
+    padding: 2rem 1.2rem;
+    border-width: 2px;
+  }
+
+  .linguistica-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+
+    .btn-voltar {
+      position: static;
+      align-self: flex-start;
+      background-color: rgba($ouro-envelhecido, 0.15);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+
+    .switch-container {
+      width: 100%;
+      justify-content: center;
+      margin: 0;
+    }
+  }
+
+  .texto-historia {
+    font-size: 1.15rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    
+    &.texto-destaque {
+      font-size: 1.25rem;
+    }
+  }
+
+  .opcoes-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btn-decisao {
+    min-width: 100%;
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  .painel-final {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .termometro-wrapper {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .linguistica-header .switch-container .label-lang {
+    font-size: 0.8rem;
+  }
+}
