@@ -1,59 +1,44 @@
-# TeatroLucanor
+# Teatro Lucanor: Herramienta Didáctica Interactiva
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.3.
+![Angular](https://img.shields.io/badge/Angular-17+-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Sass](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
-## Development server
+Aplicação web educacional desenvolvida como ferramenta de apoio metodológico para estudantes de Licenciatura em Letras-Espanhol. O projeto transforma o conto medieval *Los Burladores del Paño* (Exemplo XXXII de *El Conde Lucanor*, de Don Juan Manuel) em uma narrativa interativa de dedução social e análise diacrônica.
 
-To start a local development server, run:
+## 🎯 Proposta Pedagógica
 
-```bash
-ng serve
-```
+O aplicativo afasta-se de quizzes tradicionais para proporcionar uma **leitura dialógica**. Ao projetar a ferramenta em sala de aula, o professor atua como mediador, permitindo que a turma tome decisões pela corte real. O objetivo é demonstrar metodologias ativas no ensino de E/LE (Espanhol como Língua Estrangeira), conectando o conceito medieval de honra e ilusão com temáticas modernas como *fake news* e efeito manada.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## ✨ Funcionalidades Principais
 
-## Code scaffolding
+*   **Dualidade Linguística (Toggle Histórico):** Alternância em tempo real entre a adaptação em Castelhano Atual e o manuscrito original em Castelhano Medieval (Séc. XIV), permitindo análises fonéticas e sintáticas ao vivo (ex: conservação do *f-* inicial latino).
+*   **Glossário Etimológico (Micro-learning):** Sistema de *tooltips* reativos que interceptam palavras-chave no texto para exibir suas raízes latinas e contexto histórico.
+*   **Termômetro de Credibilidade (Nivel de Engaño):** Uma barra de progresso gamificada e reativa que pune ou recompensa a corte com base na ética das decisões tomadas pelos alunos.
+*   **Modo Professor (Painel Metodológico):** Ao alcançar um dos finais, a interface transiciona para um painel de plano de aula, explicitando as habilidades linguísticas e argumentativas mobilizadas na dinâmica.
+*   **Histórico de Estado (Rollback):** Sistema de pilha (*stack*) que permite retroceder decisões sem quebrar a pontuação da gamificação.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🎭 Dinâmica de Sala de Aula (Roleplay)
 
-```bash
-ng generate component component-name
-```
+A eficácia desta ferramenta depende da mediação teatral do grupo:
+1. **Imersão:** A turma de alunos é nomeada como o "Conselho Real".
+2. **Debate:** A cada nova tela, o mediador lê o dilema e instiga a sala a argumentar os prós e contras de cada decisão.
+3. **Votação:** A turma vota na ação do Rei. O operador registra a escolha no sistema.
+4. **Reação:** A turma observa as consequências de sua escolha através do *Termômetro de Credibilidade*, materializando o custo da pressão social e da omissão.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🛠️ Arquitetura e Tecnologias
 
-```bash
-ng generate --help
-```
+*   **Framework:** Angular (Standalone Components)
+*   **Linguagem:** TypeScript
+*   **Estilização:** SCSS (com modularização e Glassmorphism UI)
+*   **Animações:** `@angular/animations` nativo (transições de ciclo de vida)
+*   **Deploy e CI/CD:** Vercel
 
-## Building
 
-To build the project run:
+## 👨‍💻 Autoria
 
-```bash
-ng build
-```
+**Arquitetura e Desenvolvimento Técnico:** Pedro Arthur (Cloud to Code - C2C)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+**Design de Interação e Conteúdo Literário:** Grupo de Licenciatura em Letras-Espanhol, do Instituto Federal de Brasília - Campus Ceilândia, do 2º semestre de 2026.
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
