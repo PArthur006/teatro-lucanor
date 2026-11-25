@@ -1,0 +1,71 @@
+<main class="teatro-container" [class.perigo-maximo]="nivelEngano >= 80">
+  <div class="pergaminho-card">
+    
+    <header class="linguistica-header">
+      <button class="btn-voltar" *ngIf="historico.length > 0" (click)="voltar()">&#8592; Volver</button>
+      
+      <div class="switch-container" *ngIf="!cenaAtual.isFinal">
+        <span class="label-lang" [class.ativo]="!modoMedieval">Actual</span>
+        <label class="switch">
+          <input type="checkbox" [(ngModel)]="modoMedieval">
+          <span class="slider round"></span>
+        </label>
+        <span class="label-lang" [class.ativo]="modoMedieval">Medieval</span>
+      </div>
+    </header>
+
+    <!-- Trigger da animação: reage sempre que o ID muda -->
+    <div [@fadeBlur]="cenaAtual.id">
+      
+      <!-- Cenas Normais -->
+      <ng-container *ngIf="!cenaAtual.isFinal">
+        <p class="texto-historia" 
+           [class.texto-destaque]="cenaAtual.id === 'tela_inicial'"
+           [innerHTML]="(modoMedieval ? cenaAtual.textoMedieval : cenaAtual.texto) | glossario">
+        </p>
+
+        <div class="opcoes-container">
+          <button 
+            *ngFor="let opcao of cenaAtual.opcoes" 
+            class="btn-decisao" 
+            (click)="escolherOpcao(opcao.proximaCenaId, opcao.impactoEngano)">
+            {{ opcao.label }}
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- FEATURE 5: Painel Pedagógico de Duas Colunas (Finais) -->
+      <div class="painel-final" *ngIf="cenaAtual.isFinal">
+        
+        <div class="coluna-narrativa">
+          <h3>Conclusión Literaria</h3>
+          <p class="texto-historia" [innerHTML]="(modoMedieval ? cenaAtual.textoMedieval : cenaAtual.texto) | glossario"></p>
+        </div>
+
+        <div class="coluna-pedagogica">
+          <h3>Diseño Metodológico</h3>
+          <ul class="lista-habilidades">
+            <li><strong>Obra-base:</strong> El Conde Lucanor (Ejemplo XXXII), Don Juan Manuel.</li>
+            <li><strong>Objetivo:</strong> Conectar el miedo al juicio social medieval con fenómenos como las <em>fake news</em> y el efecto rebaño.</li>
+            <li><strong>Habilidades E/LE:</strong> Expresión oral argumentativa, comprensión crítica y análisis léxico-diacrónico.</li>
+            <li><strong>Dinámica:</strong> Lectura interactiva, glosario etimológico activo y debate de roles.</li>
+          </ul>
+        </div>
+        
+        <div class="w-100 mt-2">
+          <button class="btn-decisao w-100" (click)="reiniciar()">Reiniciar Dinámica Metodológica</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <!-- Termômetro de Engano -->
+    <div class="termometro-wrapper" *ngIf="cenaAtual.id !== 'tela_inicial' && !cenaAtual.isFinal">
+      <span class="termometro-label">Nivel de Engaño en la Corte</span>
+      <div class="termometro-track">
+        <div class="termometro-fill" [style.width.%]="nivelEngano"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
